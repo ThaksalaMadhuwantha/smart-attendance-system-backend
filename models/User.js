@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
     required: true, 
     unique: true, 
     trim: true 
-  }, // e.g., STAFF01, LECT05
+  },
   name: { 
     type: String, 
     required: true 
@@ -29,14 +29,14 @@ const UserSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-// Password එක save වෙන්න කලින් hash කරන්න (Pre-save hook)
+
 UserSchema.pre('save', async function () {
   if (!this.isModified('password')) return;
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-// Password එක match ද කියලා check කරන method එක
+
 UserSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };

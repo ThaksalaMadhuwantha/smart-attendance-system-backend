@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-// ⚠️ හැමදේටම වඩා කලින් .env load කරන්න!
 dotenv.config({ path: './.env' }); 
 
 import express from "express";

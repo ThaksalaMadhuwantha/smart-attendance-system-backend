@@ -1,9 +1,7 @@
 import User from '../models/User.js';
 import generateToken from '../utils/generateToken.js';
 
-// @desc    Register a new user (Staff/Invigilator)
-// @route   POST /api/auth/register
-// @access  Public (පසුව මේක Adminට විතරක් සීමා කරන්න පුළුවන්)
+
 export const registerUser = async (req, res) => {
   const { userId, name, email, password, role } = req.body;
 
@@ -18,7 +16,7 @@ export const registerUser = async (req, res) => {
       userId,
       name,
       email,
-      password, // User Model එකේ Pre-save hook එකෙන් මේක hash වෙනවා
+      password, 
       role,
     });
 
@@ -39,16 +37,13 @@ export const registerUser = async (req, res) => {
   }
 };
 
-// @desc    Auth user & get token (Login)
-// @route   POST /api/auth/login
-// @access  Public
+
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
     const user = await User.findOne({ email });
 
-    // User Model එකේ තියෙන matchPassword method එකෙන් password එක check කරනවා
     if (user && (await user.matchPassword(password))) {
       res.json({
         _id: user._id,
